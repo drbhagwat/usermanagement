@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/defaultLayout">
+<div layout:fragment="content">
+  <div class="row">
+    <div class="col">
+      <div th:if="${param.error}" class="alert alert-danger">
+        You can update only your data.
+      </div>
+
+      <h2 class="form-signin-heading">Update User</h2>
+      <form th:action="@{/api/v1/users/update}" method="post"
+            th:object="${user}" class="form-signin">
+        <label for="email" class="sr-only">Email</label>
+        <p>
+          <input type="email" id="email" name="username"
+                 class="form-control"
+                 placeholder="E-mail" required autofocus=""
+                 th:field="*{username}" readonly>
+        <p th:if="${#fields.hasErrors('username')}"
+           th:errorclass="error" th:errors="*{username}">
+        </p>
+        <label for="password" class="sr-only">Password</label>
+        <p>
+          <input type="password" id="password" name="password"
+                 class="form-control" placeholder="Password" required
+                 th:field="*{password}">
+        </p>
+        <p th:if="${#fields.hasErrors('password')}"
+           th:errorclass="error" th:errors="*{password}">
+        </p>
+        <div th:if="${numberOfUsers >= 1}">Select User's Role
+          <select th:field="*{roleName}" id="dropDownList">
+            <option th:each="roleName : ${roleNames}" th:value="${roleName}"
+                    th:text="${roleName}">
+            </option>
+          </select>
+        </div>
+        <p>
+          <button class="btn btn-primary btn-block mt-3" type="submit">
+            Update
+          </button>
+          </span>
+        </p>
+        <input type="hidden" th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

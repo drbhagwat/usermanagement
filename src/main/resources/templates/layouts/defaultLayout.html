@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      decorate="layouts/defaultTemplate">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Insert Title Here</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/all.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+  <div th:replace="~{layouts/commonHeader :: header}">Customized header
+    will
+    go here.
+  </div>
+  <section layout:fragment="content">
+    <p>
+      Replace this section with a div of a page that has
+      layout:fragment="content" in that div
+    </p>
+  </section>
+  <div th:replace="~{layouts/commonFooter :: footer}">
+    Customized footer will
+    go here.
+  </div>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/all.min.js}"></script>
+</body>
+</html>
