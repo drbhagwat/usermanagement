@@ -5,6 +5,8 @@ import com.example.UserManagement.model.User;
 import com.example.UserManagement.service.UserService;
 import jakarta.validation.Valid;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@Data
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("/register")
 public class RegistrationController {
   private final UserService userService;

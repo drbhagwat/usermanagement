@@ -4,6 +4,7 @@ import com.example.UserManagement.enums.UserRole;
 import com.example.UserManagement.model.User;
 import com.example.UserManagement.service.UserService;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/api/v1/users")
+@Data
 public class UserController {
   @Autowired
   private UserService userService;

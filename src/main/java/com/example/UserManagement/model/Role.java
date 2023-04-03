@@ -1,6 +1,6 @@
 package com.example.UserManagement.model;
 
-import com.example.UserManagement.audit.Audit;
+import com.example.UserManagement.audit.AuditAware;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role extends Audit implements Serializable {
+public class Role extends AuditAware<String> implements Serializable {
   @Id @GeneratedValue
   private Integer id;
 

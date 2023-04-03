@@ -14,7 +14,7 @@ import java.util.Date;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Audit {
+public abstract class AuditAware<U> {
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
   public Date createdTime;

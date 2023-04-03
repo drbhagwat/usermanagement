@@ -1,6 +1,6 @@
 package com.example.UserManagement.model;
 
-import com.example.UserManagement.audit.Audit;
+import com.example.UserManagement.audit.AuditAware;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,7 +20,7 @@ import java.util.List;
 // as user is a reserved word in PostgreSQL, using users
 @Table(name = "_user")
 @Data
-public class User extends Audit implements UserDetails {
+public class User extends AuditAware<String> implements UserDetails {
   @Id
   @NotNull(message = "e-mail cannot be null")
   @NotEmpty(message = "e-mail cannot be empty")
