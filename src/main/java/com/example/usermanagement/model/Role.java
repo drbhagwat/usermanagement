@@ -9,25 +9,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role extends Auditable<String> implements Serializable {
-  @Id @GeneratedValue
+  @Id
+  @GeneratedValue
   private Integer id;
 
   @NotNull(message = "role name cannot be null")
   @NotEmpty(message = "role name cannot be empty")
-  @Column(unique=true)
+  @Column(unique = true)
   private String roleName;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,
-      CascadeType.MERGE}, mappedBy = "roles")
-  private Set<User> users = new HashSet<>();
+  @OneToOne(mappedBy = "role")
+  private User user;
 
   public Role(String roleName) {
     this.roleName = roleName;

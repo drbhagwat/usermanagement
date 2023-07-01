@@ -22,10 +22,14 @@ import java.util.List;
 @Data
 public class User extends Auditable<String> implements UserDetails {
   @Id
+  @GeneratedValue
+  Long employeeId;
+
   @NotNull(message = "e-mail cannot be null")
   @NotEmpty(message = "e-mail cannot be empty")
   @Email(message = "e-mail invalid", regexp = "^[a-zA-Z0-9_!#$" +
       "%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+  @Column(unique=true)
   private String username;
 
   @NotNull(message = "password cannot be null")
@@ -39,30 +43,14 @@ public class User extends Auditable<String> implements UserDetails {
   private boolean credentialsNonExpired;
   private String roleName;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,
-      CascadeType.MERGE})
-  @JoinTable(name = "_user_role",
-      joinColumns = {@JoinColumn(name = "username")},
-      inverseJoinColumns = {@JoinColumn(name = "id")})
-  private Collection<Role> roles = new HashSet<>();
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "role_id", referencedColumnName = "id")
+  private Role role;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-    for (Role r : this.getRoles()) {
-      grantedAuthorities.add(new SimpleGrantedAuthority(r.getRoleName()));
-    }
+    grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
     return grantedAuthorities;
-  }
-
-  public void addRole(Role role) {
-    this.roles.add(role);
-    role.getUsers().add(this);
-  }
-
-  public void removeRole(Role role) {
-    this.roles.remove(role);
-    role.getUsers().remove(this);
   }
 }

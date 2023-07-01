@@ -28,13 +28,13 @@ public class UserService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String userName) throws
       UsernameNotFoundException {
-    return userRepository.findById(userName)
+    return userRepository.findByUsername(userName)
         .orElseThrow(() -> new UsernameNotFoundException(String.format("User " +
             "name %s not found", userName)));
   }
 
   public User find(String userName) {
-    Optional<User> optionalUser = userRepository.findById(userName);
+    Optional<User> optionalUser = userRepository.findByUsername(userName);
     return optionalUser.isEmpty() ? null : optionalUser.get();
   }
 
@@ -85,11 +85,11 @@ public class UserService implements UserDetailsService {
         // admin is updating someone else
         if (!getNameOfLoggedInUser()
             .equalsIgnoreCase(existingUser.getUsername())) {
-          existingUser.setRoleName(newRoleName);
+          existingUser.getRole().setRoleName(newRoleName);
           existingRole.setRoleName(newRoleName);
         }
       } else { // there are other admins too in the system
-        existingUser.setRoleName(newRoleName);
+        existingUser.getRole().setRoleName(newRoleName);
         existingRole.setRoleName(newRoleName);
       }
     }
@@ -105,34 +105,26 @@ public class UserService implements UserDetailsService {
     }
     Role existingRole = getRole(existingUser);
     String existingRoleName = existingRole.getRoleName();
-    String userRole = UserRole.ROLE_USER.getRoleName();
     String adminRole = UserRole.ROLE_ADMIN.getRoleName();
     // get list of admins
     List<User> usersWithAdminRole =
         userRepository.findUsersWithRole(adminRole);
     // get list of users
-    List<User> usersWithUserRole =
-        userRepository.findUsersWithRole(userRole);
+    List<User> usersWithNonAdminRole =
+        userRepository.findUsersWithRole(adminRole);
 
-    // the current user is USER
-    if (existingRoleName.equalsIgnoreCase(userRole)) {
-      existingUser.removeRole(existingRole);
-
-      // if this is the last user, then delete the role too
-      if (usersWithUserRole.size() == 1) {
-        roleRepository.delete(existingRole);
-      }
-      userRepository.delete(existingUser); // always delete the current user
+    // if this is the last user, then delete the role too
+    if (usersWithNonAdminRole.size() == 1) {
+      roleRepository.delete(existingRole);
     } else { // current user is the ADMIN
 
-      if (usersWithAdminRole.size() == 1 && !usersWithUserRole.isEmpty()) {
+      if (usersWithAdminRole.size() == 1 && !usersWithNonAdminRole.isEmpty()) {
         return null;
       }
-      existingUser.removeRole(existingRole);
 
       // if this is the last admin, and there are no other users in the
       // system, only then delete the role
-      if (usersWithUserRole.isEmpty()) {
+      if (usersWithNonAdminRole.isEmpty()) {
         roleRepository.delete(existingRole);
       }
       userRepository.delete(existingUser); // always delete the current user
@@ -154,17 +146,10 @@ public class UserService implements UserDetailsService {
     if (getNumberOfUsers() == 0) {
       roleName = UserRole.ROLE_ADMIN.getRoleName();
     } else {
-      roleName = user.getRoleName();
+      roleName = user.getRole().getRoleName();
     }
     user.setRoleName(roleName);
-
-    // create a new Role only if it does not exist in the role table
-    Role role = roleRepository.findByRoleName(roleName);
-
-    if (role == null) {
-      role = new Role(roleName);
-    }
-    user.addRole(roleRepository.save(role));
+    user.setRole(roleRepository.save(new Role(roleName)));
   }
 
   public User getLoggedInUser() {
@@ -172,7 +157,7 @@ public class UserService implements UserDetailsService {
   }
 
   public String getRoleNameOfLoggedInUser() {
-    return getLoggedInUser().getRoles().stream().findFirst().get().getRoleName();
+    return getLoggedInUser().getRole().getRoleName();
   }
 
   public String getRoleName(User user) {
@@ -181,7 +166,7 @@ public class UserService implements UserDetailsService {
 
   public Role getRole(User user) {
     // get the role of the given user
-    return user.getRoles().stream().findFirst().get();
+    return user.getRole();
   }
 
   public String getNameOfLoggedInUser() {

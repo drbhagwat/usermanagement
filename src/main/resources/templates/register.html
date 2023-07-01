@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layouts/defaultLayout">
+<head>
+  <title>registration page</title>
+</head>
 <body>
 <div layout:fragment="content">
   <div th:if="${param.success}" class="alert alert-success">You have
@@ -36,7 +39,8 @@
     </div>
 
     <div class="mb-3">
-      <input type="password" class="form-control" id="password" name="password"
+      <input type="password" class="form-control"  autocomplete="on"
+             id="password" name="password"
              placeholder="Type Password (minimum 8 characters)"
              required th:field="*{password}">
       <p th:if="${#fields.hasErrors('password')}" th:errorclass="error"
