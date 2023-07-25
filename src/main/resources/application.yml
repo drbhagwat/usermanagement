@@ -16,4 +16,4 @@ spring:
           lob:
             non_contextual_creation: true
   application:
-    name: usermanagement
+    name: auditing
