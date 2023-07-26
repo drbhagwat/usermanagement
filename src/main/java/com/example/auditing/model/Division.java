@@ -8,7 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +29,7 @@ public class Division extends Auditable<String> implements Serializable {
   @OneToMany(mappedBy = "division",
       cascade = CascadeType.ALL,
       orphanRemoval = true)
-  private Set<Department> departments = new HashSet<>();
+  private List<Department> departments = new ArrayList<>();
 
   public void addDepartment(Department department) {
     departments.add(department);

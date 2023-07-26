@@ -30,13 +30,13 @@ public class DivisionController {
   }
 
   @PostMapping()
-  public Division add(@Valid @RequestBody Division newUser) {
-    return (divisionService.add(newUser));
+  public Division add(@Valid @RequestBody Division newDivision) {
+    return (divisionService.add(newDivision));
   }
 
   @PutMapping("/{id}")
-  public Division update(@PathVariable long id, @Valid @RequestBody Division newUser) {
-    return divisionService.update(id, newUser);
+  public Division update(@PathVariable long id, @Valid @RequestBody Division newDivision) {
+    return divisionService.update(id, newDivision);
   }
 
   @DeleteMapping("/{id}")
