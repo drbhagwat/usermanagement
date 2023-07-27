@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,6 +23,21 @@ public class Department extends Auditable<String> implements Serializable {
   private String name;
 
   @JsonIgnore
+  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
+      orphanRemoval = true)
+  private List<Line> lines = new ArrayList<>();
+
+  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   private Division division;
+
+  public void addLine(Line line) {
+    lines.add(line);
+    line.setDepartment(this);
+  }
+
+  public void removeLine(Line line) {
+    lines.remove(line);
+    line.setDepartment(null);
+  }
 }

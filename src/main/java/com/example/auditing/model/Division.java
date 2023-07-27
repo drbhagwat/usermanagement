@@ -9,9 +9,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -26,9 +24,8 @@ public class Division extends Auditable<String> implements Serializable {
   private String name;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "division",
-      cascade = CascadeType.ALL,
-      orphanRemoval = true)
+  @OneToMany(mappedBy = "division", cascade = CascadeType.ALL, orphanRemoval
+      = true)
   private List<Department> departments = new ArrayList<>();
 
   public void addDepartment(Department department) {
