@@ -10,36 +10,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/api/v1/{divisionId}/departments")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DepartmentController {
   @Autowired
   private DepartmentService departmentService;
 
-  @GetMapping()
+  @GetMapping("/api/v1/{divisionId}/departments")
   public ResponseEntity<List<Department>> getAll(@PathVariable long divisionId) {
     return ResponseEntity.ok().body(departmentService.getAll(divisionId));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/api/v1/departments/{id}")
   public ResponseEntity<Department> get(@PathVariable long id) {
     return ResponseEntity.ok().body(departmentService.find(id));
   }
 
-  @PostMapping()
+  @PostMapping("/api/v1/{divisionId}/departments")
   public void add(@PathVariable long divisionId,
-                        @Valid @RequestBody Department newDepartment) {
+                  @Valid @RequestBody Department newDepartment) {
     departmentService.add(divisionId, newDepartment);
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/api/v1/departments/{id}")
   public Department update(@PathVariable long id, @Valid @RequestBody Department newDepartment) {
     return departmentService.update(id, newDepartment);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/api/v1/departments/{id}")
   public void delete(@PathVariable long id) {
     departmentService.delete(id);
   }

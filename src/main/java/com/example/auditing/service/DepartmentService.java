@@ -47,6 +47,6 @@ public class DepartmentService {
   @Transactional
   public void delete(long id) {
     Department existingDepartment = find(id);
-    departmentRepository.delete(existingDepartment); // always delete the current department
+    departmentRepository.delete(existingDepartment);
   }
 }

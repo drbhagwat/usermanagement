@@ -18,7 +18,6 @@ public class Department extends Auditable<String> implements Serializable {
 
   @NotNull(message = "department name cannot be null")
   @NotEmpty(message = "department name cannot be empty")
-  @Column(unique = true)
   private String name;
 
   @JsonIgnore
