@@ -29,4 +29,15 @@ public class Line extends Auditable<String> implements Serializable {
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   private Department department;
+
+  public void addZone(Zone zone) {
+    zones.add(zone);
+    zone.setLine(this);
+  }
+
+  public void removeZone(Zone zone) {
+    zones.remove(zone);
+    zone.setLine(null);
+  }
+
 }
