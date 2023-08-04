@@ -1,6 +1,5 @@
 package com.example.auditing.repository;
 
-import com.example.auditing.model.Line;
 import com.example.auditing.model.Zone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

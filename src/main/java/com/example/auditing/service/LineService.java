@@ -14,10 +14,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LineService {
-  @Autowired
-  private DepartmentService departmentService;
-  @Autowired
-  private LineRepository lineRepository;
+  private final DepartmentService departmentService;
+  private final LineRepository lineRepository;
 
   public Line find(long id) {
     return lineRepository.findById(id).orElseThrow(() ->

@@ -38,6 +38,6 @@ public class DivisionService {
   @Transactional
   public void delete(long id) {
     Division existingDivision = find(id);
-    divisionRepository.delete(existingDivision); // always delete the current division
+    divisionRepository.delete(existingDivision);
   }
 }

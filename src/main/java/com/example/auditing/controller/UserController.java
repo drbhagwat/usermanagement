@@ -13,12 +13,11 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
-  @Autowired
-  private UserService userService;
-
+  private final UserService userService;
 
   @GetMapping()
   public ResponseEntity<List<User>> getAll(Model model) {

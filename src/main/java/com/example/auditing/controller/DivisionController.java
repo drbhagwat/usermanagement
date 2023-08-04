@@ -13,11 +13,11 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/v1/divisions")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DivisionController {
-  @Autowired
-  private DivisionService divisionService;
+  private final DivisionService divisionService;
 
   @GetMapping()
   public ResponseEntity<List<Division>> getAll(Model model) {

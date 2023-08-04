@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DepartmentController {
-  @Autowired
-  private DepartmentService departmentService;
+  private final DepartmentService departmentService;
 
   @GetMapping("/api/v1/{divisionId}/departments")
   public ResponseEntity<List<Department>> getAll(@PathVariable long divisionId) {
@@ -33,7 +33,8 @@ public class DepartmentController {
   }
 
   @PutMapping("/api/v1/departments/{id}")
-  public Department update(@PathVariable long id, @Valid @RequestBody Department newDepartment) {
+  public Department update(@PathVariable long id,
+                           @Valid @RequestBody Department newDepartment) {
     return departmentService.update(id, newDepartment);
   }
 

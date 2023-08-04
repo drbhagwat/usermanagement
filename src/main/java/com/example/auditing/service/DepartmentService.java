@@ -15,11 +15,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DepartmentService {
-  @Autowired
-  private DivisionService divisionService;
-  @Autowired
-  private DepartmentRepository departmentRepository;
-  @Autowired
+  private final DivisionService divisionService;
+  private final DepartmentRepository departmentRepository;
   private final DivisionRepository divisionRepository;
 
   public Department find(long id) {

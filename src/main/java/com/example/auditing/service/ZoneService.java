@@ -14,10 +14,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ZoneService {
-  @Autowired
-  private LineService lineService;
-  @Autowired
-  private ZoneRepository lineRepository;
+  private final LineService lineService;
+  private final ZoneRepository lineRepository;
 
   public Zone find(long id) {
     return lineRepository.findById(id).orElseThrow(() ->

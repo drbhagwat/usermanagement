@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LineController {
-  @Autowired
-  private LineService lineService;
+  private final LineService lineService;
 
   @GetMapping("/api/v1/{departmentId}/lines")
   public ResponseEntity<List<Line>> getAll(@PathVariable long departmentId) {
