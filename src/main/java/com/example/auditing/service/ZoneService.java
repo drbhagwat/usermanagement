@@ -14,16 +14,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ZoneService {
+  private final ZoneRepository zoneRepository;
   private final LineService lineService;
-  private final ZoneRepository lineRepository;
 
   public Zone find(long id) {
-    return lineRepository.findById(id).orElseThrow(() ->
+    return zoneRepository.findById(id).orElseThrow(() ->
         new ResourceNotFoundException("Zone with id " + id + " Not Found!"));
   }
 
   public List<Zone> getAll(long lineId) {
-    return lineRepository.findZonesByLineId(lineId);
+    return zoneRepository.findZonesByLineId(lineId);
+  }
+
+  public List<Zone> getAll() {
+    return zoneRepository.findAll();
   }
 
   @Transactional
@@ -36,12 +40,12 @@ public class ZoneService {
   public Zone update(long id, Zone newZone) {
     Zone existingZone = find(id);
     existingZone.setName(newZone.getName());
-    return lineRepository.save(existingZone);
+    return zoneRepository.save(existingZone);
   }
 
   @Transactional
   public void delete(long id) {
     Zone existingZone = find(id);
-    lineRepository.delete(existingZone);
+    zoneRepository.delete(existingZone);
   }
 }

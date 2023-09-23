@@ -28,6 +28,10 @@ public class DepartmentService {
     return departmentRepository.findDepartmentsByDivisionId(divisionId);
   }
 
+  public List<Department> getAll() {
+    return departmentRepository.findAll();
+  }
+
   public void add(long divisionId, Department department) {
     Division division = divisionService.find(divisionId);
     division.addDepartment(department);

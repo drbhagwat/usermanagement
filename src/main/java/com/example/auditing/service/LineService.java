@@ -26,6 +26,10 @@ public class LineService {
     return lineRepository.findLinesByDepartmentId(departmentId);
   }
 
+  public List<Line> getAll() {
+    return lineRepository.findAll();
+  }
+
   @Transactional
   public void add(long departmentId, Line newLine) {
     Department department = departmentService.find(departmentId);

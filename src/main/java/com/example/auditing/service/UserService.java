@@ -19,9 +19,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService implements UserDetailsService {
-  private final PasswordEncoder passwordEncoder;
-  private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private RoleRepository roleRepository;
 
   @Override
   public UserDetails loadUserByUsername(String userName) throws

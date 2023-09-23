@@ -29,7 +29,7 @@ public class UserController {
     return ResponseEntity.ok().body(userService.find(id));
   }
 
-  @PostMapping()
+  @PostMapping("/register")
   public User add(@Valid @RequestBody User newUser) {
     return (userService.add(newUser));
   }
